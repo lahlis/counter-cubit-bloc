@@ -1,3 +1,4 @@
+import 'package:counter_app/bloc/counter_bloc.dart';
 import 'package:counter_app/cubit/counter_cubit.dart';
 import 'package:counter_app/home_page.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CounterCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CounterCubit()),
+        BlocProvider(create: (context) => CounterBloc()),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -25,12 +29,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-/* notas:
-- provider: fornece a instância da classe CounterCubit para que seja possível acessá-lo
-em qualquer lugar no app. 
-para isso, no main, wrap o materialapp com o provider e fornece a instância.
-
-blocprovider: utilizado para fornecer uma instância de bloc de uma página para outra.
-só aceita blocs/cubits.
-*/
