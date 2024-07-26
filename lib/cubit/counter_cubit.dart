@@ -8,6 +8,9 @@ class CounterCubit extends Cubit<int> {
   }
 
   void decrement() {
+    if (state == 0) {
+      return;
+    }
     emit(state - 1);
   }
 }
@@ -15,6 +18,8 @@ class CounterCubit extends Cubit<int> {
 /* notas:
 - a classe Cubit estende e é muito similar ao Bloc, porém sem possuir a noção dos eventos
 e dependendo de métodos para emitir ('emit') novos estados.
+
+Observação: emit é uma função protegida, ou seja não pode ser usada fora da classe Cubit
 
 Cubit requer um construtor, cujo valor tem que ser passado da child classe para parent
 class. Ou seja, tem que se passar o valor do CounterCubit (filha) para o Cubit (pai):
@@ -40,4 +45,12 @@ CounterCubit() : super(0);
 
 - a função de incremento criada utiliza o método emit, que irá notificar todos os listener
 que o counter teve seu estado alterado e que é necessário atualizar o ui
+
+- void decrement() {
+    if (state == 0){
+      return;
+    }
+
+ impede que o valor siga abaixo de zero. assim que o estado é igual a 0, retorna nada e
+ simplesmente para. enquanto essa condição não é satisfeita, o decrement continua
  */
